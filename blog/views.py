@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db import connection
+from django.http import HttpResponse
 
 from .forms import CommentForm, CreateBlogForm
 from .models import Post
@@ -12,9 +13,7 @@ def frontpage(request):
     posts = Post.objects.all()
     query = request.GET.get('search')
     if query:
-        cursor = connection.cursor()
-        raw = '''SELECT * FROM blog_post WHERE title LIKE title=?''', query 
-        posts = Post.objects.raw("SELECT * FROM blog_post WHERE title LIKE '%{}%' OR name LIKE '%{}%'".format(query, query))
+        posts = Post.objects.raw("SELECT * FROM blog_post WHERE title LIKE '%{}%'".format(query))
 
     return render(request, 'blog/frontpage.html', {'posts': posts})
 
