@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  {% if posts %}
+    {% for post in posts %}
+      <div class="post block">
+        <h2 class="subtitle">{{ post.title }}</h2>
+        <small>Posted by {{ post.created_by }}</small></br>
+        <small>Posted at {{ post.date_added }}</small>
+
+        <p>{{ post.intro }}</p>
+
+        <a href="{% url 'post_detail' post.slug %}">Read more</a>
+
+      </div>
+
+
+    {% endfor %}
+  {% else %}
+      <div>
+        <h2 class="subtitle">No posts found!</h2>
+      </div>
+  {% endif %}
+{% endblock %}
