@@ -36,9 +36,9 @@ A blogging application with login functionality. Once logged in, users can creat
 ### FLAW 1: SQL Injection:
 The search functionality is vulnerable to an injection attack. 
 ```
-posts = Post.objects.raw("SELECT * FROM blog_post WHERE title LIKE '%{}%' OR name LIKE '%{}%'".format(query, query))
+posts = Post.objects.raw("SELECT * FROM blog_post WHERE title LIKE '%{}%'".format(query))
 ```
-https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/26335904a547a21c125356ed8556d74772873f9a/blog/views.py#L17
+https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/b23c66a28b8af672286bb431b6ab4a8d06e2872d/blog/views.py#L16
 
 In this code, the query variable is directly inserted into the SQL statement using the format() method. If an attacker were to enter malicious code as the query variable, it would be incorporated into the SQL statement and executed by the database. This could allow the attacker to gain unauthorized access to the database, manipulate or steal data, or even take over the entire database.
 
