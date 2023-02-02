@@ -95,7 +95,7 @@ To enable security logging in Django, the developer will need to add appropriate
 It's important to note that simply enabling security logging in a Django app is not enough to protect it from potential security vulnerabilities. The app will also need to have appropriate monitoring and response measures in place to effectively detect and respond to security incidents. Without these measures, the app may still be vulnerable to attacks, even if it is logging security-related events.
 
 #### Fix:
-https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/a090e49d52e51811abce3ec4ccb61227cf2b8a23/vulnerable_blog/settings.py#L141-L142
+https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/e64ea281e809d160189eacbe06816bbcaf8574a9/vulnerable_blog/settings.py#L141-L142
 This commented logging setup enables logging and saves the logs to a file within the "logs" folder. The logs are rotated daily at midnight.
 
 ### FLAW 5: Vulnerable and Outdated Components
