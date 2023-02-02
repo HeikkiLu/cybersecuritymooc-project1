@@ -18,7 +18,7 @@ A blogging application with login functionality. Once logged in, users can creat
 - Install requirements
   - `pip install -r requirements.txt`
 - Start the server with `python manage.py runserver`
-- Access the blog site by navigating to 127.0.0.1:8000
+- Access the blog site by navigating to [127.0.0.1:8000](127.0.0.1:8000)
 
 ## Credentials
 
@@ -33,6 +33,7 @@ A blogging application with login functionality. Once logged in, users can creat
 
 ## Vulnerabilities
 
+By default, each vulnerability comes with a commented fix. To observe its functionality, you can uncomment the lines with the fix and comment out the vulnerability.
 
 ### FLAW 1: SQL Injection:
 The search functionality is vulnerable to an injection attack. 
@@ -44,6 +45,10 @@ https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/b23c66a28b8af672286b
 In this code, the query variable is directly inserted into the SQL statement using the format() method. If an attacker were to enter malicious code as the query variable, it would be incorporated into the SQL statement and executed by the database. This could allow the attacker to gain unauthorized access to the database, manipulate or steal data, or even take over the entire database.
 
 To prevent this type of vulnerability, it is important to properly sanitize user-provided input before incorporating it into an SQL statement. This can be done by using parameterized queries that separate user input from the SQL statement, or by using other methods to ensure that only safe, valid data is incorporated into the SQL statement.
+
+#### Fix:
+https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/a090e49d52e51811abce3ec4ccb61227cf2b8a23/blog/views.py#L17-L18
+The vulnerability is easily avoided by using Django's easy to use database-abstaction API.
 
 ### FLAW 2: Broken Authentication:
 ```
@@ -67,11 +72,15 @@ By default, Django uses a cryptographically secure random number generator (CSPR
 
 To use the built-in session key generator in Django, you can simply enable the SESSION_COOKIE_SECURE and SESSION_COOKIE_HTTPONLY settings in your project's settings.py file. This will enable secure, HTTP-only cookies to be used to store session keys, which will help to protect user data and prevent unauthorized access.
 
+#### Fix:
+https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/a090e49d52e51811abce3ec4ccb61227cf2b8a23/vulnerable_blog/settings.py#L135-L139
+To fix the vulnerability, use Django's default session handlers.
+
 ### FLAW 3: Security Misconfiguration
 ```
 DEBUG = True
 ```
-https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/26335904a547a21c125356ed8556d74772873f9a/vulnerable_blog/settings.py#L26
+https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/a090e49d52e51811abce3ec4ccb61227cf2b8a23/vulnerable_blog/settings.py#L30-L31
 
 When debug mode is turned on, detailed error messages may reveal sensitive information about your project, such as the full path to your project files on the server, the versions of software libraries that you are using, and even the source code of your application. This information can help attackers identify and exploit vulnerabilities in your application or its dependencies.
 
@@ -85,11 +94,15 @@ To enable security logging in Django, the developer will need to add appropriate
 
 It's important to note that simply enabling security logging in a Django app is not enough to protect it from potential security vulnerabilities. The app will also need to have appropriate monitoring and response measures in place to effectively detect and respond to security incidents. Without these measures, the app may still be vulnerable to attacks, even if it is logging security-related events.
 
+#### Fix:
+https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/a090e49d52e51811abce3ec4ccb61227cf2b8a23/vulnerable_blog/settings.py#L141-L142
+This commented logging setup enables logging and saves the logs to a file within the "logs" folder. The logs are rotated daily at midnight.
+
 ### FLAW 5: Vulnerable and Outdated Components
 ```
 sqlparse==0.4.1
 ```
-https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/26335904a547a21c125356ed8556d74772873f9a/requirements.txt#L3
+https://github.com/HeikkiLu/cybersecuritymooc-project1/blob/a090e49d52e51811abce3ec4ccb61227cf2b8a23/requirements.txt#L3-L4
 
 Using outdated components in a web application can cause a number of problems, including security vulnerabilities and instability. Some of the specific problems that can occur when using outdated components include:
 
