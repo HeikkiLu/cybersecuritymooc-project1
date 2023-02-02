@@ -14,6 +14,9 @@ def frontpage(request):
     query = request.GET.get('search')
     if query:
         posts = Post.objects.raw("SELECT * FROM blog_post WHERE title LIKE '%{}%'".format(query))
+    # FIX FLAW 1:
+    #    posts = Post.objects.filter(title__icontains=query)
+
 
     return render(request, 'blog/frontpage.html', {'posts': posts})
 

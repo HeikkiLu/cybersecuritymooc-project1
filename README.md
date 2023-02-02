@@ -18,6 +18,7 @@ A blogging application with login functionality. Once logged in, users can creat
 - Install requirements
   - `pip install -r requirements.txt`
 - Start the server with `python manage.py runserver`
+- Access the blog site by navigating to 127.0.0.1:8000
 
 ## Credentials
 

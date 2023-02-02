@@ -1,3 +1,4 @@
 asgiref==3.5.2
 Django==4.1.4
+# FIX FLAW 5: Update the sqlparse library by changing the following to a newer version, e.g. 'sqlparse==0.4.4' or by running 'pip install --upgrade sqlparse'
 sqlparse==0.4.1

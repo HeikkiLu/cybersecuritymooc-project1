@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
+
 from pathlib import Path
+
+from django.conf.global_settings import SESSION_COOKIE_HTTPONLY, SESSION_COOKIE_SECURE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rg_lji*r6t55t4z_!iicfhvi1p+#*#zs9%px^r623)7%8ixaxw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# FIX FLAW 3: set the DEBUG flag to False
 DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -127,3 +133,55 @@ LOGIN_REDIRECT_URL = "frontpage"
 LOGOUT_REDIRECT_URL = "frontpage"
 
 SESSION_ENGINE = "vulnerable_blog.session_backend"
+
+# FIX FLAW 2:
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_HTTPONLY = True
+
+# FIX FLAW 4:
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} [{name}:{lineno}] {message}",  # other options: {module} {process:d} {thread:d}
+            "datefmt": "%Y-%m-%d_%H:%M:%S",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "formatter": "verbose",
+            "filename": "./logs/blogapp.log",
+            "when": "midnight",  # specify the type of interval
+            "interval": 1,
+            "backupCount": 5,  # number of backup files to keep
+            "encoding": None,
+            "delay": False,
+            "utc": False,
+            "atTime": None,
+            "errors": None,
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "propagate": True,
+        },
+        "": {
+            "handlers": ["file"],
+            "level": "INFO",
+        },
+    },
+}
